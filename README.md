@@ -1,6 +1,7 @@
 # react-scroll-manager
 
 [![Build Status](https://travis-ci.org/trevorr/react-scroll-manager.svg?branch=master)](https://travis-ci.org/trevorr/react-scroll-manager)
+[![npm version](https://badge.fury.io/js/react-scroll-manager.svg)](https://badge.fury.io/js/react-scroll-manager)
 
 ## Overview
 
@@ -22,7 +23,7 @@ hash links that reference dynamically rendered elements.
 
 ## Requirements
 
-This library has the following Requirements:
+This library has the following requirements:
 
 - HTML5 browsers: Only the [browser history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API)
   (not hash history) is supported. Generally, this means [modern browsers or IE 10+](https://caniuse.com/#feat=history).
