@@ -1,5 +1,7 @@
 # react-scroll-manager
 
+[![Build Status](https://travis-ci.org/trevorr/react-scroll-manager.svg?branch=master)](https://travis-ci.org/trevorr/react-scroll-manager)
+
 ## Overview
 
 In a single page application (SPA), the application manipulates the browser history and DOM to simulate navigation.
