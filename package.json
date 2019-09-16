@@ -4,8 +4,10 @@
   "description": "Scroll position manager for React applications",
   "main": "lib/index.js",
   "files": [
-    "lib"
+    "lib",
+    "src/index.d.ts"
   ],
+  "types": "src/index.d.ts",
   "scripts": {
     "build": "babel src --out-dir lib",
     "lint": "eslint 'src/*.js' 'test/*.js'",
