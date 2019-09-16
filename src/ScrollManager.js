@@ -123,7 +123,9 @@ export class ScrollManager extends React.Component {
   }
 
   _savePositions() {
-    const { scrollX, scrollY } = window;
+    // use pageXOffset instead of scrollX for IE compatibility
+    // https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollX#Notes
+    const { pageXOffset: scrollX, pageYOffset: scrollY } = window;
     this._savePosition('window', { scrollX, scrollY });
     for (const scrollKey in this._scrollableNodes) {
       const node = this._scrollableNodes[scrollKey];
@@ -189,7 +191,7 @@ export class ScrollManager extends React.Component {
     this._cancelDeferred(scrollKey);
     const attemptScroll = () => {
       window.scrollTo(scrollX, scrollY);
-      return window.scrollX === scrollX && window.scrollY === scrollY;
+      return window.pageXOffset === scrollX && window.pageYOffset === scrollY;
     };
     if (!attemptScroll()) {
       const failedScroll = () => {
