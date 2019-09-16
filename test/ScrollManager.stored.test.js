@@ -10,8 +10,8 @@ window.sessionStorage.setItem('scroll', JSON.stringify({
   positions: {
     [locationKey]: {
       window: {
-        scrollX: 10,
-        scrollY: 20
+        pageXOffset: 10,
+        pageYOffset: 20
       },
       main: {
         scrollLeft: 30,
