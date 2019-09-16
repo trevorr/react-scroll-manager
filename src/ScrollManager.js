@@ -123,8 +123,8 @@ export class ScrollManager extends React.Component {
   }
 
   _savePositions() {
-    const { scrollX, scrollY } = window;
-    this._savePosition('window', { scrollX, scrollY });
+    const { pageXOffset, pageYOffset } = window;
+    this._savePosition('window', { pageXOffset, pageYOffset });
     for (const scrollKey in this._scrollableNodes) {
       const node = this._scrollableNodes[scrollKey];
       const { scrollLeft, scrollTop } = node;
@@ -183,17 +183,17 @@ export class ScrollManager extends React.Component {
   _restoreWindow() {
     const scrollKey = 'window';
     const position = this._loadPosition(scrollKey);
-    const { scrollX = 0, scrollY = 0 } = position || {};
-    debug('restore', this._locationKey, scrollKey, scrollX, scrollY);
+    const { pageXOffset = 0, pageYOffset = 0 } = position || {};
+    debug('restore', this._locationKey, scrollKey, pageXOffset, pageYOffset);
 
     this._cancelDeferred(scrollKey);
     const attemptScroll = () => {
-      window.scrollTo(scrollX, scrollY);
-      return window.scrollX === scrollX && window.scrollY === scrollY;
+      window.scrollTo(pageXOffset, pageYOffset);
+      return window.pageXOffset === pageXOffset && window.pageYOffset === pageYOffset;
     };
     if (!attemptScroll()) {
       const failedScroll = () => {
-        debug(`Could not scroll ${scrollKey} to (${scrollX}, ${scrollY})` +
+        debug(`Could not scroll ${scrollKey} to (${pageXOffset}, ${pageYOffset})` +
           `; scroll size is (${document.body.scrollWidth}, ${document.body.scrollHeight})`);
       };
 
