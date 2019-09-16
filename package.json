@@ -1,6 +1,6 @@
 {
   "name": "react-scroll-manager",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Scroll position manager for React applications",
   "main": "lib/index.js",
   "files": [
