@@ -211,6 +211,12 @@ export class ScrollManager extends React.Component {
     }
   }
 
+  _restoreInitial() {
+    if (!location.hash) {
+      this._restoreWindow();
+    }
+  }
+
   _cancelDeferred(scrollKey) {
     const deferred = this._deferredNodes[scrollKey];
     if (deferred) {
