@@ -1,18 +1,18 @@
-import { Component } from "react";
-import { History } from "history";
+import React from 'react';
+import { History } from 'history';
 
-export interface IScrollManagerProps {
-    history: History;
-    sessionKey?: string;
-    timeout?: number;
+export interface ScrollManagerProps {
+  history: History;
+  sessionKey?: string;
+  timeout?: number;
 }
 
-export class ScrollManager extends Component<IScrollManagerProps> { }
+export class ScrollManager extends React.Component<ScrollManagerProps> { }
 
-export class WindowScroller extends Component { };
+export class WindowScroller extends React.Component { }
 
-export interface IElementScrollerProps {
-    scrollKey: string;
+export interface ElementScrollerProps {
+  scrollKey: string;
 }
 
-export class ElementScroller extends Component<IElementScrollerProps> { };
+export class ElementScroller extends React.Component<ElementScrollerProps> { }
