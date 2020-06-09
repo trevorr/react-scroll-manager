@@ -131,6 +131,7 @@ and scroll restoration won't work for those locations.
 - The concept for this library is based on [react-router-restore-scroll](https://github.com/ryanflorence/react-router-restore-scroll).
 - The timed [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) approach to scrolling to hash link
   elements comes from [Gajus Kuizinas](https://medium.com/@gajus/making-the-anchor-links-work-in-spa-applications-618ba2c6954a).
+- Thanks to Anders Gissel for [suggesting a fix for IE 11 window scrolling](https://github.com/trevorr/react-scroll-manager/pull/3) and Søren Bruus Frank for [submitting TypeScript definitions](https://github.com/trevorr/react-scroll-manager/pull/2).
 
 ## License
 
