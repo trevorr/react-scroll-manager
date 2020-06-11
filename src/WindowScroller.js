@@ -6,7 +6,7 @@ class ManagedWindowScroller extends React.Component {
   componentDidMount() {
     const { manager } = this.props;
     if (manager) {
-      manager._restoreWindow();
+      manager._restoreInitial();
     } else {
       console.warn('WindowScroller only works when nested within a ScrollManager'); // eslint-disable-line no-console
     }
