@@ -5,6 +5,8 @@ export interface ScrollManagerProps {
   history: History;
   sessionKey?: string;
   timeout?: number;
+  // skippingSaveDeferredScroll?: boolean;
+  blockSizeTolerance?: number;
 }
 
 export class ScrollManager extends React.Component<ScrollManagerProps> { }
