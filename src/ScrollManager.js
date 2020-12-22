@@ -7,6 +7,8 @@ const debug = require('debug')('ScrollManager');
 const ManagerContext = React.createContext();
 
 const defaultTimeout = 3000;
+// const defaultSkippingSaveDeferredScroll = true;
+const defaultBlockSizeTolerance = 0;
 
 export class ScrollManager extends React.Component {
   constructor(props) {
@@ -136,15 +138,23 @@ export class ScrollManager extends React.Component {
 
   _savePosition(scrollKey, position) {
     debug('save', this._locationKey, scrollKey, position);
-    if (!(scrollKey in this._deferredNodes)) {
-      let loc = this._positions[this._locationKey];
-      if (!loc) {
-        loc = this._positions[this._locationKey] = {};
-      }
-      loc[scrollKey] = position;
-    } else {
-      debug(`Skipping save due to deferred scroll of ${scrollKey}`);
+    // const { skippingSaveDeferredScroll = defaultSkippingSaveDeferredScroll } = this.props;
+
+    // if (!(!(scrollKey in this._deferredNodes) && skippingSaveDeferredScroll)) {
+    if (scrollKey in this._deferredNodes) {
+      this._cancelDeferred(scrollKey);
     }
+    let loc = this._positions[this._locationKey];
+    if (!loc) {
+      loc = this._positions[this._locationKey] = {};
+    }
+    loc[scrollKey] = position;
+    ///////////////////////////////////////////////////////////////////////////////
+    // No need this because since now there are no false positives on save calls //
+    ///////////////////////////////////////////////////////////////////////////////
+    // } else {
+    //   debug(`Skipping save due to deferred scroll of ${scrollKey}`);
+    // }
   }
 
   _loadPosition(scrollKey) {
@@ -155,14 +165,19 @@ export class ScrollManager extends React.Component {
   _restoreNode(scrollKey) {
     const position = this._loadPosition(scrollKey);
     const { scrollLeft = 0, scrollTop = 0 } = position || {};
+    const { blockSizeTolerance = defaultBlockSizeTolerance } = this.props;
     debug('restore', this._locationKey, scrollKey, scrollLeft, scrollTop);
 
     this._cancelDeferred(scrollKey);
     const node = this._scrollableNodes[scrollKey];
     const attemptScroll = () => {
-      node.scrollLeft = scrollLeft;
-      node.scrollTop = scrollTop;
-      return node.scrollLeft === scrollLeft && node.scrollTop === scrollTop;
+      const availableScrollX = node.scrollWidth - node.clientWidth + blockSizeTolerance;
+      const availableScrollY = node.scrollHeight - node.clientHeight + blockSizeTolerance;
+      if (availableScrollX >= scrollX && availableScrollY >= scrollY) {
+        node.scrollLeft = scrollLeft;
+        node.scrollTop = scrollTop;
+      }
+      return node.scrollLeft + blockSizeTolerance >= scrollLeft && node.scrollTop + blockSizeTolerance >= scrollTop;
     };
     if (!attemptScroll()) {
       const failedScroll = () => {
@@ -186,17 +201,20 @@ export class ScrollManager extends React.Component {
     const scrollKey = 'window';
     const position = this._loadPosition(scrollKey);
     const { scrollX = 0, scrollY = 0 } = position || {};
+    const { blockSizeTolerance = defaultBlockSizeTolerance } = this.props;
     debug('restore', this._locationKey, scrollKey, scrollX, scrollY);
 
     this._cancelDeferred(scrollKey);
     const attemptScroll = () => {
-      window.scrollTo(scrollX, scrollY);
-      return window.pageXOffset === scrollX && window.pageYOffset === scrollY;
+      const availableScrollX = document.documentElement.scrollWidth - document.documentElement.clientWidth + blockSizeTolerance;
+      const availableScrollY = document.documentElement.scrollHeight - document.documentElement.clientHeight + blockSizeTolerance;
+      if (availableScrollX >= scrollX && availableScrollY >= scrollY) window.scrollTo(scrollX, scrollY);
+      return window.pageXOffset + blockSizeTolerance >= scrollX && window.pageYOffset + blockSizeTolerance >= scrollY;
     };
     if (!attemptScroll()) {
       const failedScroll = () => {
         debug(`Could not scroll ${scrollKey} to (${scrollX}, ${scrollY})` +
-          `; scroll size is (${document.body.scrollWidth}, ${document.body.scrollHeight})`);
+          `; scroll size is (${document.documentElement.scrollWidth}, ${document.documentElement.scrollHeight})`);
       };
 
       const { timeout = defaultTimeout } = this.props;
@@ -231,7 +249,9 @@ ScrollManager.propTypes = {
   history: PropTypes.object.isRequired,
   sessionKey: PropTypes.string,
   timeout: PropTypes.number,
-  children: PropTypes.node
+  children: PropTypes.node,
+  // skippingSaveDeferredScroll: PropTypes.bool,
+  blockSizeTolerance: PropTypes.number
 };
 
 export function withManager(Component) {

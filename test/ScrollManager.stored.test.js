@@ -23,6 +23,13 @@ window.sessionStorage.setItem('scroll', JSON.stringify({
   locationKey
 }));
 
+beforeEach(() => {
+  jest.spyOn(document.documentElement, 'scrollHeight', 'get').mockImplementation(() => 500);
+  jest.spyOn(document.documentElement, 'clientHeight', 'get').mockImplementation(() => 250);
+  jest.spyOn(document.documentElement, 'scrollWidth', 'get').mockImplementation(() => 500);
+  jest.spyOn(document.documentElement, 'clientWidth', 'get').mockImplementation(() => 250);
+});
+
 test('Stored positioning', () => {
   const history = createHistory();
   const tree = renderer.create(

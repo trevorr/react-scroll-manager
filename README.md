@@ -89,11 +89,12 @@ reads and writes scroll positions from/to session storage, saves positions befor
 of nested components like WindowScroller and ElementScroller, and performs delayed scrolling to hash links anywhere
 within the document. It has the following properties:
 
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| history | object | yes | A [history](https://github.com/ReactTraining/history) object, as returned by `createBrowserHistory` or `createMemoryHistory`. |
-| sessionKey | string | no | The key under which session state is stored. Defaults to `ScrollManager`. |
-| timeout | number | no | The maximum number of milliseconds to wait for rendering to complete. Defaults to 3000. |
+| Name | Type | Required | Default | Description |
+|------|------|----------|---------|-------------|
+| history | object | yes |  | A [history](https://github.com/ReactTraining/history) object, as returned by `createBrowserHistory` or `createMemoryHistory`. |
+| sessionKey | string | no | `ScrollManager` | The key under which session state is stored. |
+| timeout | number | no | `3000` | The maximum number of milliseconds to wait for rendering to complete. |
+| blockSizeTolerance | number | no | `0` | The maximum number of pixels which will be considered as a successful scroll to saved position.<br><b>Example</b>: page height is 500px, last saved position is 503px, `blockSizeTolerance` is `10`. Lib will scroll to `500px` and considered as a successful without waiting for the page to become `>503px`.<br>This is important when your page has effects (for example, animations, hovers) that slightly change the page size and this needs to be compensated. |
 
 ### WindowScroller
 

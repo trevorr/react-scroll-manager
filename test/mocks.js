@@ -14,5 +14,21 @@ export const mockElement = Object.create(null, {
     enumerable: true,
     get: getScrollTop,
     set: setScrollTop
+  },
+  scrollWidth: {
+    enumerable: true,
+    get: jest.fn(() => 500)
+  },
+  clientWidth: {
+    enumerable: true,
+    get: jest.fn(() => 250)
+  },
+  scrollHeight: {
+    enumerable: true,
+    get: jest.fn(() => 500)
+  },
+  clientHeight: {
+    enumerable: true,
+    get: jest.fn(() => 250)
   }
 });
