@@ -7,12 +7,18 @@ export interface ScrollManagerProps {
   timeout?: number;
 }
 
-export class ScrollManager extends React.Component<ScrollManagerProps> { }
+export class ScrollManager extends React.Component<
+  React.PropsWithChildren<ScrollManagerProps>
+> {}
 
-export class WindowScroller extends React.Component { }
+export class WindowScroller extends React.Component<
+  React.PropsWithChildren<{}>
+> {}
 
 export interface ElementScrollerProps {
   scrollKey: string;
 }
 
-export class ElementScroller extends React.Component<ElementScrollerProps> { }
+export class ElementScroller extends React.Component<
+  React.PropsWithChildren<ElementScrollerProps>
+> {}
